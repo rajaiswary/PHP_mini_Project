@@ -68,7 +68,7 @@ $photo = $_POST["photo"];
 $pincode = $_POST["pincode"];
 
 
-if (!preg_match("/^[a-zA-Z]+$/", $name)) {
+if (!preg_match('/^[\p{L} ]+$/u', $name)) {
   $name_error = "Name must contain only letters";
   $is_valid = false;
 }

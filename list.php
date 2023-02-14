@@ -18,6 +18,12 @@
   margin-right: 10px;
 }
 
+
+a{
+  color : black;
+  text-decoration: none;
+}
+
 /* Add styles for the button */
 button {
   padding: 10px 15px;

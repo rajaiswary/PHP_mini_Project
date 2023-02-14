@@ -5,15 +5,6 @@ $username = "root";
 $password = "";
 $dbname = "addressbook";
 
-$name_error = "";
-$email_error = "";
-
-$mobile_error = "";
-$password_error = "";
-$address_error = "";
-
-  $is_valid = true;
-
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
@@ -30,43 +21,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $address = $_POST["address"];
 
 
-   
-
-    if (!preg_match('/^[\p{L} ]+$/u', $name)) {
-      $name_error = "Name must contain only letters";
-      $is_valid = false;
-    }
-
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-      $email_error = "Invalid email format";
-      $is_valid = false;
-    }
-
-    
-    if (!preg_match("/^[7-9][0-9]{9}$/", $mobile)) {
-      $mobile_error = "Mobile must start with 7, 8 or 9 and contain 10 digits";
-      $is_valid = false;
-    }
-
-    if (!preg_match("/^(?=.*[A-Z])(?=.*[!@#$%^&*()_+=-])(?=.*[0-9]).{8,}$/", $password)) {
-      $password_error = "Password must contain at least one upper-case letter, one special character and a minimum of 8 characters";
-      $is_valid = false;
-    }
-
-    if (empty($address)) 
-    {
-      $address_error = "Address cant be empty";
-      $is_valid = false;
-    }
+    $errors = array();
 
 
+    // Validate name
+  if (empty($name)) {
+    array_push($errors, "Name is required");
+  }
 
-    
 
-    if ($is_valid)
-    {
+  // Validate email
+  if (empty($email)) {
+    array_push($errors, "Email is required");
+  } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    array_push($errors, "Invalid email format");
+  }
 
+
+  if (empty($mobile)) {
+    array_push($errors, "Mobile is required");
+  } elseif (!preg_match('/^[0-9]{10}+$/', $mobile)) {
+    array_push($errors, "Invalid mobile number");
+  }
+
+
+  // Validate password
+  if (empty($password)) {
+    array_push($errors, "Password is required");
+  } elseif (strlen($password) < 6) {
+    array_push($errors, "Password must be at least 6 characters");
+  }
+
+  if (empty($address)) {
+    array_push($errors, "Address is required");
+  }
   
+
+  if (count($errors) == 0)
+  {
 
 
     $sql = "INSERT INTO user(name,email,mobile,password,address)
@@ -82,9 +74,8 @@ if ($conn->query($sql) === TRUE) {
 
 $conn->close();
 }
+
 }
-
-
 
 ?>
 
@@ -163,28 +154,23 @@ $conn->close();
   </header>
 
 
-  
+  <?php if (count($errors) > 0) : ?>
+      <ul>
+        <?php foreach ($errors as $error) : ?>
+          <li><?php echo $error; ?></li>
+        <?php endforeach; ?>
+      </ul>
+    <?php endif; ?>
 
   <div class="container">
     <h2>Register</h2>
     <form action="" method="post">
       <input type="text" name="name" placeholder="Name" required>
-      <span class="error"><?php echo $name_error; ?></span><br><br>
-
       <input type="email" name="email" placeholder="Email" required>
-      <span class="error"><?php echo $email_error; ?></span><br><br>
-
       <input type="number" name="mobile" placeholder="Mobile" required>
-      <span class="error"><?php echo $mobile_error; ?></span><br><br>
-
       <input type="password" name="password" placeholder="Password" required>
-      <span class="error"><?php echo $password_error; ?></span><br><br>
-
       <textarea name="address" placeholder="Address" required></textarea>
-      <span class="error"><?php echo $address_error; ?></span><br><br>
-
       <input type="submit" name="submit" value="Submit">
-      
     </form>
 
     <p style="text-align: center; margin-top: 30px;">Already have an account? <a href="login.php">Go to login</a></p>

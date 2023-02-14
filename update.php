@@ -62,8 +62,13 @@ if(isset($_POST['update']))
     $photo = $_POST['photo'];
     $pincode = $_POST['pincode'];
 
+    if($photo == "")
+    {
+      $photo = $row['photo'];
+    }
 
-    if (!preg_match("/^[a-zA-Z]+$/", $name)) {
+
+    if (!preg_match('/^[\p{L} ]+$/u', $name)) {
       $name_error = "Name must contain only letters";
       $is_valid = false;
     }
@@ -188,7 +193,7 @@ mysqli_close($conn);
       <p>Country: <input type="text" name="country" value="<?php echo $row['country']; ?>"></p>
       <span class="error"><?php echo $country_error; ?></span><br><br>
 
-      <p>Photo: <input type="file" name="photo" value="<?php echo $row['photo']; ?>"></p>
+      <p>Photo: <input type="file" name="photo" value=""><span><?php echo $row['photo']; ?></span></p>
 
       <p>Pincode: <input type="number" name="pincode" value="<?php echo $row['pincode']; ?>"></p>
       <span class="error"><?php echo $pincode_error; ?></span><br><br>
