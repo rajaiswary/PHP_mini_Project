@@ -185,7 +185,8 @@ $conn->close();
 
 
       <label for="photo">Upload Photo:</label>
-      <input type="file" id="photo" name="photo">
+      <input type="file" id="photo" name="photo" onchange="previewImage(event);">
+      <img id = "preview" style = "max-width : 100px;"><br><br>
 
       <label for="pincode">Pincode:</label>
       <input type="number" id="pincode" name="pincode">
@@ -195,6 +196,19 @@ $conn->close();
       <input type="submit" name = "submit" value="Submit">
       <a href = "list.php">Go back</a>
     </form>
+
+    <script> 
+    function previewImage(event) 
+    {
+      var reader = new FileReader(); 
+      reader.onload = function() 
+      {
+         var output = document.getElementById('preview');
+          output.src = reader.result; 
+      } 
+      reader.readAsDataURL(event.target.files[0]); 
+      
+    } </script>
   </body>
 </html>
 

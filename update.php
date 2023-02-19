@@ -182,24 +182,40 @@ mysqli_close($conn);
     <form action="" method="post">
       <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
       <p>Name: <input type="text" name="name" value="<?php echo $row['name']; ?>"></p>
-      <span class="error"><?php echo $name_error; ?></span><br><br>
+      <span class="error"><?php echo $name_error; ?></span><br>
 
       <p>Phone: <input type="number" name="phone" value="<?php echo $row['phone']; ?>"></p>
-      <span class="error"><?php echo $phone_error; ?></span><br><br>
+      <span class="error"><?php echo $phone_error; ?></span><br>
 
       <p>State: <input type="text" name="state" value="<?php echo $row['state']; ?>"></p>
-      <span class="error"><?php echo $state_error; ?></span><br><br>
+      <span class="error"><?php echo $state_error; ?></span><br>
 
       <p>Country: <input type="text" name="country" value="<?php echo $row['country']; ?>"></p>
-      <span class="error"><?php echo $country_error; ?></span><br><br>
+      <span class="error"><?php echo $country_error; ?></span><br>
 
-      <p>Photo: <input type="file" name="photo" value=""><span><?php echo $row['photo']; ?></span></p>
+      <p>Photo: <input type="file" name="photo"onchange="previewImage(event);" value=""><span><?php echo $row['photo']; ?></span></p>
+      <img id = "preview" style = "max-width : 100px;"><br><br>
+
 
       <p>Pincode: <input type="number" name="pincode" value="<?php echo $row['pincode']; ?>"></p>
       <span class="error"><?php echo $pincode_error; ?></span><br><br>
 
       <input type="submit" name="update" value="Update">
     </form>
+
+
+    <script> 
+    function previewImage(event) 
+    {
+      var reader = new FileReader(); 
+      reader.onload = function() 
+      {
+         var output = document.getElementById('preview');
+          output.src = reader.result; 
+      } 
+      reader.readAsDataURL(event.target.files[0]); 
+      
+    } </script>
   </body>
 </html>
 
