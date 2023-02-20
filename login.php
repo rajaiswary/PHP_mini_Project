@@ -83,9 +83,21 @@
     <h2>Login</h2>
     <form action="" method="post">
       <input type="email" name="email" placeholder="Email" required>
-      <input type="password" name="password" placeholder="Password" required>
+      <input type="password"  id="password" name="password" placeholder="Password" required><br>
+      <input type="checkbox" onclick="showPassword()">Show Password<br><br>
+
       <input type="submit" name = "submit" value="Submit">
     </form>
+    <script>
+      function showPassword() {
+        var x = document.getElementById("password");
+        if (x.type === "password") {
+          x.type = "text";
+        } else {
+          x.type = "password";
+        }
+      }
+    </script>
     <div class="links">
       <a href="register.php">Not a member yet? Register here</a><br>
       <a href="index.php">Back to Home</a>
