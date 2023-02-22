@@ -202,8 +202,11 @@ mysqli_close($conn);
       <p>Country: <input type="text" name="country" value="<?php echo $row['country']; ?>"></p>
       <span class="error"><?php echo $country_error; ?></span><br>
 
-      <p>Photo: <input type="file" name="photo"onchange="previewImage(event);" value=""><span><?php echo $row['photo']; ?></span></p>
-      <img id = "preview" style = "max-width : 100px;"><br><br>
+      <p>Photo: <input type="file" name="photo"onchange="previewImage(event);" value=""><span><?php if( $row['photo']){
+        ?> <img src="images/<?php echo $row['photo']; ?>" width="100"><?php
+
+      }; ?></span><span><img id = "preview" style = "max-width : 100px;"></span></p>
+      <br>
 
 
       <p>Pincode: <input type="number" name="pincode" value="<?php echo $row['pincode']; ?>"></p>
