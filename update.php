@@ -186,7 +186,7 @@ mysqli_close($conn);
   <body>
     <nav>
       <a href="list.php">Profile</a>
-      <a href="index.php">Home</a>
+      <!-- <a href="index.php">Home</a> -->
     </nav>
     <form action="" method="post" enctype="multipart/form-data">
       <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
